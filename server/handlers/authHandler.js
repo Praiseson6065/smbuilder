@@ -38,14 +38,15 @@ const Login = async (req, res) => {
     console.error(error);
   }
 };
-const Logout = async(req,res)=>{
+const Logout = async (req,res)=>{
   const token = req.cookies.token
   const state = await blacklist.findOne({"token":token})
-  console.log(state)
+  console.log(!state)
   if(!state){
       blacklist.create({token})
-      req.clearCookie("token")
   }
+  
+  res.clearCookie("token")
   res.send({"message":true})
 }
 module.exports = {Signup,Login,Logout};

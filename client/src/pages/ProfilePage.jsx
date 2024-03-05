@@ -7,7 +7,6 @@ const ProfilePage = () => {
     <div>Username : {user.username}</div>
     <div>Name : {user.name}</div>
     <div>Email : {user.email}</div>
-    <div>Accountype : {user.accountType}</div>
     </> );
 }
  

@@ -7,9 +7,10 @@ import useAuth from "../context/useAuth";
 const Login = () => {
   const { handleSubmit, register } = useForm();
   const navigate = useNavigate();
-  const { user, login } = useAuth();
-
-  if (user) {
+  const {isauthenticated, login } = useAuth();
+  console.log(useAuth())
+  
+  if (isauthenticated) {
     navigate("/profile");
   }
 
@@ -35,6 +36,7 @@ const Login = () => {
       if (success) {
         handleSuccess(message);
         login(user);
+        console.log(success, message,user)
         setTimeout(() => {
           navigate("/profile");
         }, 1000);

@@ -8,18 +8,29 @@ import PrivateRoute from "./utils/PrivateRoute";
 import ProfilePage from "./pages/ProfilePage";
 import Navbar from "./components/Navbar";
 import Signup from "./pages/Signup";
+import Logout from "./pages/Logout";
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-      <Navbar/>
+        <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/signup" element={<Signup/>}/>
+          <Route exact path="/signup" element={<Signup />} />
+          <Route exact path="/logout" element={
+              <PrivateRoute>
+                <Logout />
+              </PrivateRoute>
+            } />
           <Route
+            exact
             path="/profile"
-            element={<PrivateRoute><ProfilePage /></PrivateRoute>}
+            element={
+              <PrivateRoute>
+                <ProfilePage />
+              </PrivateRoute>
+            }
           />
         </Routes>
       </AuthProvider>

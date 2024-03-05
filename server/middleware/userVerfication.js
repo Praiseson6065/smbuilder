@@ -1,9 +1,14 @@
+const blacklist = require("../models/blacklist");
 const User = require("../models/user");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
-const userVerfication = (req, res, next) => {
+const userVerfication = async (req, res, next) => {
   const token = req.cookies.token;
+  const state = await blacklist.findOne({"token":token})
+  if (state){
+    return res.send({ msg:"UnAuthorizedToken",status: false });
+  }
   if (!token) {
     return res.send({ status: false });
   }

@@ -1,45 +1,56 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const userSchema = new mongoose.Schema({
-    email:{
-        type:String,
-        required : [true,"Your email address is required"],
-        unique:true,
+  email: {
+    type: String,
+    required: [true, "Your email address is required"],
+    unique: true,
+  },
+  name: {
+    type: String,
+    required: [true, "Your name is required"],
+  },
+  username: {
+    type: String,
+    required: [true, "Your username is required"],
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: [true, "Your password  is required"],
+  },
+  followers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    name:{
-        type:String,
-        required : [true,"Your name is required"],
+  ],
+  following: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    username:{
-        type:String,
-        required : [true,"Your username is required"],
-        unique:true,
-    },password:{
-        type:String,
-        required : [true,"Your password  is required"],
-
+  ],
+  requestsSend: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    followers: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-    }],
-    following: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-    }],
-    accountType : {
-        type: String,
-        default:"public",
+  ],
+  requestsRecieved: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    createdAt: {
-        type: Date,
-        default: new Date(),
-      },
+  ],
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
-userSchema.pre("save",async function(){
-    this.password = await bcrypt.hash(this.password,12);
-
+userSchema.pre("save", async function () {
+  this.password = await bcrypt.hash(this.password, 12);
 });
 
-module.exports =    mongoose.model("User",userSchema);
+module.exports = mongoose.model("User", userSchema);
